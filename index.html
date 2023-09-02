@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" />
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="vue.global.js" type="text/javascript"></script>
+    <title>Page</title>
+</head>
+
+<body>
+    <main id="app">
+        <section>
+            <h2>Query Parameters</h2>
+            <table>
+                <tr>
+
+                </tr>
+            </table>
+        </section>
+    </main>
+    <script>
+        Vue.createApp({
+            data() {
+                return {
+                    query_parameters: {},
+                }
+            },
+            setup() {
+                new URLSearchParams(window.location.search)
+                return {
+
+                }
+            }
+        }).mount('#app')
+    </script>
+</body>
+
+</html>
