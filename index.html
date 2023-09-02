@@ -1,35 +1,147 @@
 <!DOCTYPE html>
 <html lang="en" />
-
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="vue.global.js" type="text/javascript"></script>
     <title>Page</title>
-</head>
+    <style>
+        .mono {
+            font-family: monospace, monospace;
+        }
+        .wrap {
+            white-space: break-spaces;
+            overflow-wrap: anywhere;
+            word-break: break-all;
+        }
+        table {
+            border-collapse: collapse;
+            border: black solid 1px;
+        }
+        @media (max-width < 600px) {
+            table {
+                width: 100%;
+            }
+        }
+        td {
+            border: black solid 1px;
+            padding: 0.5em;
+        }
+        input {
 
+        }
+    </style>
+</head>
 <body>
     <main id="app">
+        <h1>URL destructor</h1>
+        <form action="" onsubmit="return false" >
+            <p><label for="url">Please input URL</label></p>
+            <input type="url" name="url" id="url" />
+        </form>
+        <section>
+            <h2>URL</h2>
+            <p class="wrap mono">{{ data.url?.url }}</p>
+        </section>
+        <section>
+            <h2>Protocol</h2>
+            <p class="mono wrap">{{ data.url?.protocol }}</p>
+        </section>
+        <section>
+            <h2>Host</h2>
+            <p class="mono wrap">{{ data.url?.host }}</p>
+        </section>
+        <section>
+            <h2>Port</h2>
+            <p class="mono wrap">{{ data.url?.port }}</p>
+        </section>
+        <section>
+            <h2>Path</h2>
+            <p class="mono wrap">{{ data.url?.path }}</p>
+        </section>
         <section>
             <h2>Query Parameters</h2>
             <table>
-                <tr>
-
+                <thead>
+                    <tr>
+                        <th>Key</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tr class="mono wrap" v-for="value, key in data.query_parameters">
+                    <template v-if="value">
+                        <td class="">{{ key }}</td>
+                        <td class="">{{ value }}</td>
+                    </template>
+                    <template v-else>
+                        <td></td>
+                        <td class="">{{ key }}</td>
+                    </template>
                 </tr>
             </table>
         </section>
     </main>
     <script>
         Vue.createApp({
-            data() {
-                return {
-                    query_parameters: {},
-                }
-            },
-            setup() {
-                new URLSearchParams(window.location.search)
-                return {
+            setup(props, context) {
+                const methods = {
+                    sanitize: (value) => {
+                        if (!value) return ''
+                        const replacement = {
+                            '<': '&lt;',
+                            '>': '&gt;',
+                            '&': '&amp;',
+                            '"': '&quot;',
+                            "'": '&#039;',
+                        }
+                        for (const [key, val] of Object.entries(replacement)) {
+                            value = value.replaceAll(key, val)
+                        }
+                        return value
+                    },
+                    parseUrl: (text) => {
+                        const url = new URL(text)
 
+                        return {
+                            url: text,
+                            protocol: url.protocol,
+                            host: url.host.replace(/:.*$/, ''),
+                            port: url.port.replace(/:.*$/, ''),
+                            path: url.pathname,
+                            query_parameters: url.searchParams
+                        }
+                    }
+                }
+
+
+                const data = Vue.reactive({
+                    query_parameters: {},
+                    url: {
+                        // protocol: '',
+                        // host: '',
+                        // port: '',
+                        // path: '',
+                        // query_parameters: {}
+                    }
+                })
+                Vue.onMounted(() => {
+                    // set up query parameters
+                    const params = new URLSearchParams(window.location.search)
+                    // sort keys alphabetically
+                    const keys = [...params.keys()].sort()
+                    const query_parameters = {}
+                    for (const key of keys) {
+                        query_parameters[key] = methods.sanitize(params.get(key))
+                    }
+                    data.query_parameters = query_parameters
+
+                    // set up url
+                    data.url = methods.parseUrl(window.location.href)
+                    console.log(data.url)
+                })
+
+                return {
+                    data, methods
                 }
             }
         }).mount('#app')
