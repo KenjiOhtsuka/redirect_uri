@@ -1,26 +1,29 @@
-# redirect_uri
-Redirect page where you can see all the query parameters
+# Декодер URL / URI перенаправления
+
+Декодер URL / URI перенаправления может отображать все параметры запроса.
 
 https://kenjiohtsuka.github.io/redirect_uri/
 
-## Example Usage 1
 
-When you are developing the OpenID Connect provider,
-you may have to check your redirection,
-and you have to make sure that the state or code parameter are redirected correctly.
+## Пример использования как декодер URL
 
-This page will help you to check the redirection.
-When you set the redirect_uri to this page,
-as https://kenjiohtsuka.github.io/redirect_uri/,
-you can see the query parameters and other URL parts in the page.
+Когда вы хотите увидеть параметры запроса,
+откройте https://kenjiohtsuka.github.io/redirect_uri/
+и укажите полный URL в поле ввода,
+затем вы сможете увидеть параметры запроса.
 
-For example, please access to
+
+## Пример использования в качестве URI перенаправления
+
+Когда вы разрабатываете провайдера OpenID Connect,
+вам, возможно, придется проверить ваше перенаправление
+и убедиться, что параметры состояния или кода перенаправляются правильно.
+
+Эта страница поможет вам проверить перенаправление.
+Когда вы устанавливаете redirect_uri на эту страницу,
+как https://kenjiohtsuka.github.io/redirect_uri/,
+вы можете увидеть параметры запроса и другие части URL на странице.
+
+Например, перейдите по ссылке
 https://kenjiohtsuka.github.io/redirect_uri/?code=1234&state=5678
-and you can see the parameters.
-
-## Example Usage 2
-
-When you want to see the query parameters,
-open https://kenjiohtsuka.github.io/redirect_uri/
-and set the full url to the input box,
-then you can see the query parameters.
+и вы сможете увидеть параметры.
