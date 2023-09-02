@@ -148,6 +148,14 @@
                             }
                         }
 
+                        if (!url.port) {
+                            if (url.protocol === 'http:') {
+                                url.port = '80'
+                            } else if (url.protocol === 'https:') {
+                                url.port = '443'
+                            }
+                        }
+
                         return {
                             url: text,
                             protocol: url.protocol?.replace(/:.*$/, ''),
