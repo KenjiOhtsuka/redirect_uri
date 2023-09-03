@@ -22,7 +22,7 @@ OpenID Connect プロバイダーを開発している場合、
 このページは、リダイレクトを確認するのに役立ちます。
 redirect_uri をこのページに設定すると、
 https://kenjiohtsuka.github.io/redirect_uri/
-のように設定した場合、ページ内でクエリパラメータやその他のURLの部分を見ることができます。
+のように設定した場合、ページ内でクエリパラメータやその他のURLの部分を確認できます。
 
 例えば、
 https://kenjiohtsuka.github.io/redirect_uri/?code=1234&state=5678
