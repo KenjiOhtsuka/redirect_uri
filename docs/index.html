@@ -60,6 +60,11 @@
     </style>
 </head>
 <body>
+    <aside class="ad">
+        <!-- admax -->
+        <script src="https://adm.shinobi.jp/s/0f62bdb89bd188fa5c4a6271e042abe1"></script>
+        <!-- admax -->
+    </aside>
     <main id="app">
         <h1>URL Destructor</h1>
         <noscript>
@@ -72,11 +77,6 @@
             <p><label for="url">Please input URL</label></p>
             <input type="url" name="url" id="url" v-model="urlInput" class="url-input" />
         </form>
-        <aside class="ad">
-            <!-- admax -->
-            <component is="script" src="https://adm.shinobi.jp/s/0f62bdb89bd188fa5c4a6271e042abe1" async></component>
-            <!-- admax -->
-        </aside>
         <section>
             <h2>URL</h2>
             <p class="wrap mono">{{ value(url?.url) }}</p>
