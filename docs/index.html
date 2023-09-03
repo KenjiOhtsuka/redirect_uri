@@ -74,7 +74,7 @@
         </form>
         <aside class="ad">
             <!-- admax -->
-            <script src="https://adm.shinobi.jp/s/0f62bdb89bd188fa5c4a6271e042abe1"></script>
+            <component is="script" src="https://adm.shinobi.jp/s/0f62bdb89bd188fa5c4a6271e042abe1"></component>
             <!-- admax -->
         </aside>
         <section>
@@ -161,13 +161,18 @@
             <p class="mono wrap">{{ value(url.fragment) }}</p>
         </section>
         <aside class="ad">
-            <!-- admax -->
-            <script src="https://adm.shinobi.jp/s/bc75a7fea67e9023b86d7d35e9e3feca"></script>
-            <!-- admax -->
+            <component is="script" src="https://adm.shinobi.jp/s/bc75a7fea67e9023b86d7d35e9e3feca"></component>
         </aside>
     </main>
     <script>
         const {computed, toRef} = Vue
+
+        const Ad1 = {
+            setup() {},
+            template: "<p>text</p>" //`<` + `script src="https://adm.shinobi.jp/s/0f62bdb89bd188fa5c4a6271e042abe1">` + `<` + `/script>`
+            // Can also target an in-DOM template:
+            // template: '#my-template-element'
+        }
 
         Vue.createApp({
             setup(props, context) {
