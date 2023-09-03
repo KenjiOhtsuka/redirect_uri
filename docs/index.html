@@ -48,34 +48,61 @@
             max-width: 800px;
             margin: 0 auto;
         }
+        section > section {
+            padding-left: 1em;
+        }
+        .caution {
+            color: red;
+        }
     </style>
 </head>
 <body>
     <main id="app">
-        <h1>URL destructor</h1>
+        <h1>URL Destructor</h1>
+        <noscript>
+            <p class="caution">
+                This page requires JavaScript to work properly.
+                Please enable JavaScript in your browser.
+            </p>
+        </noscript>
         <form action="" onsubmit="return false" >
             <p><label for="url">Please input URL</label></p>
             <input type="url" name="url" id="url" v-model="urlInput" class="url-input" />
         </form>
+        <aside></aside>
         <section>
-            <h2>URL Destructor</h2>
-            <p class="wrap mono">{{ url?.url }}</p>
+            <h2>URL</h2>
+            <p class="wrap mono">{{ value(url?.url) }}</p>
         </section>
         <section>
             <h2>Protocol</h2>
-            <p class="mono wrap">{{ url?.protocol }}</p>
+            <p class="mono wrap">{{ value(url?.protocol) }}</p>
         </section>
         <section>
-            <h2>Host</h2>
-            <p class="mono wrap">{{ url?.host }}</p>
-        </section>
-        <section>
-            <h2>Port</h2>
-            <p class="mono wrap">{{ url?.port }}</p>
+            <h2>Authority</h2>
+            <section>
+                <h3>User info</h3>
+                <section>
+                    <h4>User name</h4>
+                    <p class="mono wrap">{{ value(url?.username) }}</p>
+                </section>
+                <section>
+                    <h4>Password</h4>
+                    <p class="mono wrap">{{ value(url?.password) }}</p>
+                </section>
+            </section>
+            <section>
+                <h3>Host</h3>
+                <p class="mono wrap">{{ value(url?.host) }}</p>
+            </section>
+            <section>
+                <h3>Port</h3>
+                <p class="mono wrap">{{ url?.port }}</p>
+            </section>
         </section>
         <section>
             <h2>Path</h2>
-            <p class="mono wrap">{{ url?.path }}</p>
+            <p class="mono wrap">{{ value(url?.path) }}</p>
         </section>
         <section>
             <h2>Query Parameters</h2>
@@ -122,6 +149,11 @@
 <!--                </tbody>-->
 <!--            </table>-->
         </section>
+        <section>
+            <h2>Fragment</h2>
+            <p class="mono wrap">{{ url.fragment }}</p>
+        </section>
+        <aside></aside>
     </main>
     <script>
         const {computed, toRef} = Vue
@@ -151,11 +183,14 @@
                             return {
                                 url: text,
                                 protocol: '',
+                                username: '',
+                                password: '',
                                 host: '',
                                 port: '',
                                 path: '',
                                 query_parameters: {},
-                                sorted_query_parameters: {}
+                                sorted_query_parameters: {},
+                                fragment: '',
                             }
                         }
 
@@ -171,13 +206,17 @@
                         return {
                             url: text,
                             protocol: url.protocol?.replace(/:.*$/, ''),
+                            username: url.username,
+                            password: url.password,
                             host: url.hostname?.replace(/:.*$/, ''),
                             port: port,
                             path: url.pathname,
+                            search: url.search,
                             query_parameters: url.searchParams,
                             sorted_query_parameters: Object.fromEntries(
                                 [...url.searchParams.entries()].sort()
-                            )
+                            ),
+                            fragment: url.hash?.replace(/^#/, '')
                         }
                     }
                 }
@@ -187,8 +226,13 @@
                     methods.parseUrl(urlInput.value)
                 )
 
+                const value = (v) => {
+                    if (v) { return v }
+                    else { return "(none)" }
+                }
+
                 return {
-                    methods, url, urlInput,
+                    methods, url, urlInput, value
                 }
             }
         }).mount('#app')
