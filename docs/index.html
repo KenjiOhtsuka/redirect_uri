@@ -54,6 +54,9 @@
         .caution {
             color: red;
         }
+        .ad {
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -69,7 +72,11 @@
             <p><label for="url">Please input URL</label></p>
             <input type="url" name="url" id="url" v-model="urlInput" class="url-input" />
         </form>
-        <aside></aside>
+        <aside class="ad">
+            <!-- admax -->
+            <script src="https://adm.shinobi.jp/s/0f62bdb89bd188fa5c4a6271e042abe1"></script>
+            <!-- admax -->
+        </aside>
         <section>
             <h2>URL</h2>
             <p class="wrap mono">{{ value(url?.url) }}</p>
@@ -153,7 +160,11 @@
             <h2>Fragment</h2>
             <p class="mono wrap">{{ url.fragment }}</p>
         </section>
-        <aside></aside>
+        <aside class="ad">
+            <!-- admax -->
+            <script src="https://adm.shinobi.jp/s/bc75a7fea67e9023b86d7d35e9e3feca"></script>
+            <!-- admax -->
+        </aside>
     </main>
     <script>
         const {computed, toRef} = Vue
@@ -221,6 +232,9 @@
                     }
                 }
 
+                const setPage = (v) => {
+                    this.activePage = v
+                }
                 const urlInput = Vue.ref(window.location.href)
                 const url = Vue.computed(() =>
                     methods.parseUrl(urlInput.value)
