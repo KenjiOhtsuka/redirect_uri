@@ -56,6 +56,7 @@
         }
         .ad {
             text-align: center;
+            margin: 1em auto;
         }
     </style>
 </head>
@@ -160,19 +161,15 @@
             <h2>Fragment</h2>
             <p class="mono wrap">{{ value(url.fragment) }}</p>
         </section>
+        <div id="test">
+            {{testValue}}
+        </div>
     </main>
     <aside class="ad">
         <script src="https://adm.shinobi.jp/s/bc75a7fea67e9023b86d7d35e9e3feca"></script>
     </aside>
     <script>
         const {computed, toRef} = Vue
-
-        const Ad1 = {
-            setup() {},
-            template: "<p>text</p>" //`<` + `script src="https://adm.shinobi.jp/s/0f62bdb89bd188fa5c4a6271e042abe1">` + `<` + `/script>`
-            // Can also target an in-DOM template:
-            // template: '#my-template-element'
-        }
 
         Vue.createApp({
             setup(props, context) {
